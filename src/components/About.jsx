@@ -9,14 +9,14 @@ export default function About() {
         <div className="lg:col-span-5 reveal">
           <div className="relative">
             <div className="absolute -inset-4 rounded-3xl bg-apc-green/10 blur-3xl" aria-hidden="true" />
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden ring-1 ring-white/[0.08] bg-gradient-to-br from-apc-green to-apc-green-dark">
-              {/* Replace with real portrait at /portrait.jpg */}
-              <div className="absolute inset-0 grid place-items-center text-white/90">
-                <div className="text-center">
-                  <span className="font-display font-black text-[9rem] leading-none tracking-tight drop-shadow-lg italic">{candidate.initials}</span>
-                  <p className="mt-2 text-xs uppercase tracking-[0.3em] text-white/50">[ replace /portrait.jpg ]</p>
-                </div>
-              </div>
+            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden ring-1 ring-white/[0.08] bg-white">
+              <img
+                src="/portrait.png"
+                alt={candidate.name}
+                className="absolute inset-0 w-full h-full object-cover object-top"
+              />
+              {/* Bottom fade to blend into section */}
+              <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-apc-dark-card to-transparent pointer-events-none" />
             </div>
 
             {/* Quote card */}
