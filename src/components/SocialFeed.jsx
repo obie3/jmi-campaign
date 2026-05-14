@@ -26,28 +26,83 @@ function Skeleton() {
   )
 }
 
-// ── Not-yet-configured placeholder ───────────────────────────
-function SetupPrompt() {
+// ── Coming Soon placeholder ───────────────────────────────────
+function ComingSoon() {
   return (
-    <div className="col-span-full flex flex-col items-center justify-center py-20 text-center reveal">
-      <div className="w-16 h-16 rounded-2xl overflow-hidden ring-1 ring-white/10 mb-5">
-        <img src="/apc-logo.jpeg" alt="APC" className="w-full h-full object-cover" />
+    <div className="col-span-full reveal">
+      {/* Mock post cards (blurred) */}
+      <div className="relative">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 select-none pointer-events-none blur-[3px] opacity-40">
+          {[
+            { w: '3/4', lines: [{ w: 'full' }, { w: '5/6' }, { w: '2/3' }] },
+            { w: '2/3', lines: [{ w: 'full' }, { w: 'full' }, { w: '3/4' }] },
+            { w: '4/5', lines: [{ w: '5/6' }, { w: 'full' }, { w: '1/2' }] },
+          ].map((card, i) => (
+            <div key={i} className="rounded-2xl overflow-hidden bg-apc-dark-card ring-1 ring-white/[0.07]">
+              <div className={`aspect-[16/10] ${i % 2 === 0 ? 'tile-green' : 'tile-gold'} opacity-60`} />
+              <div className="p-5 space-y-3">
+                <div className={`h-2.5 bg-white/10 rounded w-1/4`} />
+                {card.lines.map((l, j) => (
+                  <div key={j} className={`h-3.5 bg-white/10 rounded w-${l.w}`} />
+                ))}
+                <div className="h-3 bg-apc-green/20 rounded w-1/4 mt-2" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Overlay badge */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 text-center px-4">
+          <div className="bg-apc-dark/80 backdrop-blur-md rounded-3xl ring-1 ring-white/10 px-10 py-10 max-w-md w-full shadow-[0_24px_60px_rgba(0,0,0,0.5)]">
+            {/* Icon */}
+            <div className="w-16 h-16 mx-auto rounded-2xl overflow-hidden ring-2 ring-apc-gold/40 shadow-[0_0_24px_rgba(212,175,55,0.2)]">
+              <img src="/apc-logo.jpeg" alt="APC" className="w-full h-full object-cover" />
+            </div>
+
+            {/* Label */}
+            <span className="mt-5 inline-block text-[10px] uppercase tracking-[0.28em] font-bold text-apc-gold">
+              Social Feed
+            </span>
+
+            <h3 className="mt-2 font-display italic font-bold text-2xl sm:text-3xl text-white leading-tight">
+              Coming Soon
+            </h3>
+
+            <p className="mt-3 text-white/55 text-sm leading-relaxed">
+              Live posts from the campaign's Facebook page will appear here. Follow us now to stay updated on rallies, announcements and community moments.
+            </p>
+
+            {/* Divider */}
+            <div className="mt-6 flex items-center gap-3">
+              <div className="flex-1 h-px bg-white/[0.08]" />
+              <span className="text-[10px] text-white/30 uppercase tracking-widest">Follow us</span>
+              <div className="flex-1 h-px bg-white/[0.08]" />
+            </div>
+
+            {/* Social buttons */}
+            <div className="mt-5 flex items-center justify-center gap-3">
+              <a
+                href={candidate.socials.facebook}
+                target="_blank"
+                rel="noreferrer"
+                className="flex-1 btn-outline-light py-2.5 gap-2 justify-center text-sm"
+              >
+                <Icon name="facebook" className="w-4 h-4" />
+                Facebook
+              </a>
+              <a
+                href={candidate.socials.instagram}
+                target="_blank"
+                rel="noreferrer"
+                className="flex-1 btn-outline-light py-2.5 gap-2 justify-center text-sm"
+              >
+                <Icon name="instagram" className="w-4 h-4" />
+                Instagram
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-      <h3 className="font-display italic text-2xl font-bold text-white">Facebook feed coming soon</h3>
-      <p className="mt-3 text-white/50 max-w-sm text-sm leading-relaxed">
-        Add <code className="text-apc-gold bg-white/[0.07] px-1.5 py-0.5 rounded text-xs">VITE_FB_PAGE_ID</code> and{' '}
-        <code className="text-apc-gold bg-white/[0.07] px-1.5 py-0.5 rounded text-xs">VITE_FB_ACCESS_TOKEN</code> to your{' '}
-        <code className="text-apc-gold bg-white/[0.07] px-1.5 py-0.5 rounded text-xs">.env</code> file to activate live posts.
-      </p>
-      <a
-        href={candidate.socials.facebook}
-        target="_blank"
-        rel="noreferrer"
-        className="btn-outline mt-8 gap-2"
-      >
-        <Icon name="facebook" className="w-4 h-4" />
-        Follow on Facebook
-      </a>
     </div>
   )
 }
@@ -134,14 +189,11 @@ export default function SocialFeed() {
 
         {/* Grid */}
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {loading && !configured && <SetupPrompt />}
-          {loading &&  configured && Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} />)}
-          {!loading && error === 'not_configured' && <SetupPrompt />}
+          {(loading && !configured) || (!loading && error === 'not_configured') ? <ComingSoon /> : null}
+          {loading && configured && Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} />)}
           {!loading && error && error !== 'not_configured' && <FeedError message={error} />}
           {!loading && !error && posts.map((p) => <PostCard key={p.id} post={p} />)}
-          {!loading && !error && posts.length === 0 && (
-            <p className="col-span-full text-center text-white/40 py-14">No posts found.</p>
-          )}
+          {!loading && !error && posts.length === 0 && <ComingSoon />}
         </div>
       </div>
     </section>
