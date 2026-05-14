@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  body { @apply font-body text-slate-100 bg-apc-dark; }
+  h1, h2, h3, h4, h5 { @apply font-display tracking-tight; }
+  ::selection { background: #0B6E2C; color: #fff; }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar       { width: 7px; }
+  ::-webkit-scrollbar-track { background: #060f09; }
+  ::-webkit-scrollbar-thumb { background: #0B6E2C; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #1E8A45; }
+}
+
+@layer components {
+  .container-x { @apply max-w-7xl mx-auto px-5 sm:px-8 lg:px-12; }
+
+  /* Buttons */
+  .btn         { @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-sm tracking-wide transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-apc-green/30; }
+  .btn-primary { @apply btn bg-apc-green text-white hover:bg-apc-green-dark shadow-soft; }
+  .btn-gold    { @apply btn bg-apc-gold text-slate-900 hover:bg-amber-300 shadow-soft; }
+  .btn-ghost   { @apply btn bg-white/10 text-white ring-1 ring-white/40 hover:bg-white/20 backdrop-blur; }
+  .btn-outline { @apply btn ring-2 ring-apc-green text-apc-green hover:bg-apc-green hover:text-white; }
+  .btn-outline-light { @apply btn ring-2 ring-white/50 text-white hover:bg-white hover:text-slate-900; }
+
+  /* Eyebrows */
+  .eyebrow       { @apply inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] font-semibold text-apc-green; }
+  .eyebrow::before { content: ''; @apply w-6 h-px bg-apc-green; }
+  .eyebrow-light { @apply inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] font-semibold text-apc-gold; }
+  .eyebrow-light::before { content: ''; @apply w-6 h-px bg-apc-gold; }
+
+  /* Sections */
+  .section           { @apply py-20 sm:py-28; }
+  .section-title     { @apply font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-[1.1] italic; }
+  .section-title-dark { @apply font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-[1.1] italic; }
+  .section-title-light { @apply font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-[1.1] italic; }
+  .section-sub       { @apply mt-4 text-base sm:text-lg text-white/65 max-w-2xl; }
+  .section-sub-dark  { @apply mt-4 text-base sm:text-lg text-slate-600 max-w-2xl; }
+
+  /* Cards */
+  .card       { @apply bg-white rounded-2xl ring-1 ring-slate-200/70 shadow-sm hover:shadow-soft transition-shadow duration-300; }
+  .card-dark  { @apply bg-apc-dark-card rounded-2xl ring-1 ring-white/[0.08] hover:ring-apc-green/30 transition-all duration-300; }
+  .chip       { @apply inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full; }
+}
+
+/* ── Reveal on scroll ────────────────────────────────────────── */
+.reveal         { opacity: 0; transform: translateY(24px); transition: opacity .75s ease, transform .75s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.hero-grid {
+  background-color: #06100a;
+  background-image:
+    radial-gradient(ellipse at 15% 10%, rgba(11, 110, 44, 0.18) 0, transparent 50%),
+    radial-gradient(ellipse at 85% 70%, rgba(212, 175, 55, 0.12) 0, transparent 45%),
+    linear-gradient(160deg, #06100a 0%, #081a0e 60%, #0a1612 100%);
+}
+
+.hero-photo {
+  background-color: #060f09;
+  background-image:
+    linear-gradient(180deg, rgba(6, 15, 9, 0.90) 0%, rgba(6, 15, 9, 0.50) 45%, rgba(6, 15, 9, 0.97) 100%),
+    radial-gradient(circle at 65% 25%, rgba(212, 175, 55, 0.18) 0, transparent 45%);
+}
+
+/* ── Modal animations ───────────────────────────────────────── */
+@keyframes fadeIn  { from { opacity: 0 }              to { opacity: 1 } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(32px) scale(0.97) } to { opacity: 1; transform: translateY(0) scale(1) } }
+
+/* ── Gallery tile tones ─────────────────────────────────────── */
+.tile-green { background: linear-gradient(135deg, #0B6E2C, #064E1F); }
+.tile-gold  { background: linear-gradient(135deg, #D4AF37, #b8860b); }
+.tile-dark  { background: linear-gradient(135deg, #12221a, #0a1612); }
+.tile-cream { background: linear-gradient(135deg, #FAF7EE, #e8e0c8); }
