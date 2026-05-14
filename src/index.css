@@ -59,11 +59,26 @@
     linear-gradient(160deg, #06100a 0%, #081a0e 60%, #0a1612 100%);
 }
 
+/* Hero uses NASS building as backdrop with a deep dark overlay */
 .hero-photo {
   background-color: #060f09;
   background-image:
-    linear-gradient(180deg, rgba(6, 15, 9, 0.90) 0%, rgba(6, 15, 9, 0.50) 45%, rgba(6, 15, 9, 0.97) 100%),
-    radial-gradient(circle at 65% 25%, rgba(212, 175, 55, 0.18) 0, transparent 45%);
+    linear-gradient(160deg, rgba(5, 12, 7, 0.93) 0%, rgba(5, 12, 7, 0.82) 50%, rgba(5, 12, 7, 0.96) 100%),
+    url('/nass.jpg');
+  background-size: cover;
+  background-position: center 30%;
+  background-attachment: fixed;
+}
+
+/* Mandate & JoinMovement share the same NASS backdrop */
+.nass-bg {
+  background-color: #060f09;
+  background-image:
+    linear-gradient(160deg, rgba(5, 12, 7, 0.90) 0%, rgba(5, 12, 7, 0.78) 55%, rgba(5, 12, 7, 0.92) 100%),
+    url('/nass.jpg');
+  background-size: cover;
+  background-position: center 40%;
+  background-attachment: fixed;
 }
 
 /* ── Modal animations ───────────────────────────────────────── */

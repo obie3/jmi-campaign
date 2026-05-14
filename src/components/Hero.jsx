@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import Icon from './Icon.jsx'
 import { candidate } from '../data/site.js'
 
 export default function Hero() {
+  const [imgLoaded, setImgLoaded] = useState(false)
+
   return (
     <section id="home" className="relative overflow-hidden hero-photo text-white min-h-[92vh] flex flex-col">
       {/* Subtle grid overlay */}
@@ -57,37 +60,40 @@ export default function Hero() {
 
         {/* ── RIGHT: Portrait ── */}
         <div className="hidden lg:flex justify-center items-end relative">
-          {/* Glow ring behind portrait */}
-          <div className="absolute inset-0 rounded-3xl bg-apc-green/10 blur-3xl" aria-hidden="true" />
+          {/* Ambient glow */}
+          <div className="absolute inset-0 bg-apc-green/[0.06] blur-3xl rounded-full" aria-hidden="true" />
 
           <div className="relative w-full max-w-sm">
-            {/* Portrait frame */}
-            <div className="relative aspect-[3/4] rounded-3xl overflow-hidden ring-1 ring-white/[0.08] bg-gradient-to-br from-apc-green/80 via-apc-green-dark to-[#050f08]">
-              {/* Replace src with /portrait.jpg once available */}
+            {/* Portrait frame — white bg matches the image's own background */}
+            <div className="relative aspect-[3/4] rounded-3xl overflow-hidden ring-1 ring-white/10 bg-white">
               <img
                 src="/portrait.jpg"
                 alt={candidate.name}
                 className="absolute inset-0 w-full h-full object-cover object-top"
+                onLoad={() => setImgLoaded(true)}
                 onError={(e) => { e.currentTarget.style.display = 'none' }}
               />
 
-              {/* Placeholder shown when no portrait */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-white/80 gap-2">
-                <span className="font-display font-black text-[7rem] leading-none italic opacity-30">{candidate.initials}</span>
-                <p className="text-xs uppercase tracking-[0.3em] text-white/30">[ add /portrait.jpg ]</p>
-              </div>
+              {/* Placeholder — only shown before image loads */}
+              {!imgLoaded && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-apc-green to-apc-green-dark">
+                  <span className="font-display font-black text-[7rem] leading-none italic text-white/30">{candidate.initials}</span>
+                </div>
+              )}
 
-              {/* Bottom gradient fade */}
-              <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-[#050f08] to-transparent" />
+              {/* Left edge fade: blends white frame into dark hero */}
+              <div className="absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-[#060f09] to-transparent pointer-events-none" aria-hidden="true" />
+              {/* Bottom fade: merges into dark section below */}
+              <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-[#060f09] via-[#060f09]/60 to-transparent pointer-events-none" aria-hidden="true" />
             </div>
 
-            {/* Name card pinned at bottom of portrait */}
+            {/* Name card */}
             <div className="absolute bottom-5 left-5 right-5 bg-black/50 backdrop-blur-md rounded-2xl p-4 ring-1 ring-white/10">
               <p className="font-display font-bold text-white text-lg italic leading-tight">{candidate.name}</p>
               <p className="mt-1 text-xs text-apc-gold uppercase tracking-[0.2em] font-semibold">{candidate.identity} · {candidate.constituencyShort}</p>
             </div>
 
-            {/* APC logo watermark top-right */}
+            {/* APC logo badge */}
             <div className="absolute -top-4 -right-4 w-16 h-16 rounded-2xl overflow-hidden ring-2 ring-apc-dark shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
               <img src="/apc-logo.jpeg" alt="APC" className="w-full h-full object-cover" />
             </div>
