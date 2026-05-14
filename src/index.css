@@ -67,7 +67,6 @@
     url('/nass.jpg');
   background-size: cover;
   background-position: center 30%;
-  background-attachment: fixed;
 }
 
 /* Mandate & JoinMovement share the same NASS backdrop */
@@ -78,7 +77,11 @@
     url('/nass.jpg');
   background-size: cover;
   background-position: center 40%;
-  background-attachment: fixed;
+}
+
+/* Parallax only on devices that support it reliably (desktop) */
+@media (min-width: 1024px) {
+  .hero-photo, .nass-bg { background-attachment: fixed; }
 }
 
 /* ── Modal animations ───────────────────────────────────────── */
